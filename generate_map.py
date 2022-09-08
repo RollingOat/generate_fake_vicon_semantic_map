@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 from scipy.spatial.transform import Rotation 
-import math3d as m3d
+# import math3d as m3d
 
 CUBOID_LENGTH = 0.56
 CYLINDER_RADIUS = 0.15
@@ -155,7 +155,7 @@ resolution = 0.01
 vicon_map = map(length,width, resolution)
 vicon_map.add_object("cylinder", (xc_1,yc_1))
 vicon_map.add_object("cylinder", (xc_2,yc_2))
-vicon_map.add_object("cylinder", (xc_3, xc_3))
+vicon_map.add_object("cylinder", (xc_3, yc_3))
 
 vicon_map.add_object("cuboid", (x1, y1), yaw1)
 vicon_map.add_object("cuboid", (x2, y2), yaw2)
@@ -163,4 +163,4 @@ vicon_map.add_object("cuboid", (x3, y3), yaw3)
 vicon_map.generate_map("fake_map.png")
 
 
-print("yaw_1 {} yaw_2 {} yaw_3 {}".format(np.rad2deg(yaw1), np.rad2deg(yaw2), np.rad2deg(yaw3)))
+# print("yaw_1 {} yaw_2 {} yaw_3 {}".format(np.rad2deg(yaw1), np.rad2deg(yaw2), np.rad2deg(yaw3)))
