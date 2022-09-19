@@ -8,7 +8,8 @@ CYLINDER_RADIUS = 0.15
 CYLINDER_LABEL = 1
 CUBOID_LABEL = 2
 FLOOR_LABEL = 0
-CYLINDER_COLOR = (255, 0, 0) # BLUE
+ROAD_COLOR = (255,0,0) # blue
+CYLINDER_COLOR = (0, 255, 0) # green
 CUBOID_COLOR = (0, 0, 255) # RED
 class map:
     def __init__(self, length, width, resolution):
@@ -23,8 +24,9 @@ class map:
         self.image_size_x = int(self.length/self.resolution)
         self.image_size_y = int(self.width/self.resolution)
         self.semantic_map = np.zeros((self.image_size_y, self.image_size_x, 3),dtype = np.uint8)
-        self.semantic_map.fill(255)
-
+        self.semantic_map[:,:,0] = ROAD_COLOR[0]
+        self.semantic_map[:,:,1] = ROAD_COLOR[1]
+        self.semantic_map[:,:,2] = ROAD_COLOR[2]
     def world2image(self, world_x, world_y):
         '''
         world_x: x coord in meter in world
@@ -108,7 +110,7 @@ class map:
             box = cv2.boxPoints(rot_rectangle) 
             box = np.int0(box) #Convert into integer values
             thickness = -1
-            self.semantic_map = cv2.drawContours(self.semantic_map,[box],0,(0,0,255),thickness)
+            self.semantic_map = cv2.drawContours(self.semantic_map,[box],0,CUBOID_COLOR,thickness)
         elif(shape == "cylinder"):
             thickness = -1
             center_coordinates = (center_x_pixel, center_y_pixel)
@@ -161,6 +163,3 @@ vicon_map.add_object("cuboid", (x1, y1), yaw1)
 vicon_map.add_object("cuboid", (x2, y2), yaw2)
 vicon_map.add_object("cuboid", (x3, y3), yaw3)
 vicon_map.generate_map("fake_map.png")
-
-
-# print("yaw_1 {} yaw_2 {} yaw_3 {}".format(np.rad2deg(yaw1), np.rad2deg(yaw2), np.rad2deg(yaw3)))
