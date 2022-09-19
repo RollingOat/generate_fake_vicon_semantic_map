@@ -45,25 +45,6 @@ class map:
         print("x: {}, y: {}".format(image_x_pixel, image_y_pixel))
         return (image_x_pixel, image_y_pixel)
 
-    def vicon_to_image_tf(self, world_x, world_y):
-        # Translate
-        tf_result = m3d.Transform()
-        tf_result.pos = np.array([world_x - -self.length/2, world_y - self.width/2, 0])
-        #tf_result.translate(np.array([-self.length/2, -self.width/2, 0]))
-
-        # Rotation
-        tf_result.orient.rotate_zb(np.deg2rad(-90)) # -90 yaw
-        tf_result.orient.rotate_xb(np.deg2rad(-180)) # -180 pitch
-
-        # upperleft_coord = tf_result.orient @ np.array([[world_x], [world_y], [0]]) + tf_result.pos
-        # image_x_meter = upperleft_coord.flatten()[0]
-        # image_y_meter = upperleft_coord.flatten()[1]
-        image_x_pixel = int(tf_result.pos.x/self.resolution)
-        image_y_pixel = int(tf_result.pos.y/self.resolution)
-
-        print("x2: {}, y2: {}".format(image_x_pixel, image_y_pixel))
-        return (image_x_pixel, image_y_pixel)
-
     def generate_map(self,map_name):
         cv2.imwrite(map_name,self.semantic_map)
 
@@ -163,3 +144,11 @@ vicon_map.add_object("cuboid", (x1, y1), yaw1)
 vicon_map.add_object("cuboid", (x2, y2), yaw2)
 vicon_map.add_object("cuboid", (x3, y3), yaw3)
 vicon_map.generate_map("fake_map.png")
+
+vicon_map_class1 = np.where(vicon_map.semantic_map[:,:,0] == 255, 0, 255) # road
+vicon_map_class3 = np.where(vicon_map.semantic_map[:,:,2] == 255, 0, 255) # build
+vicon_map_class4 = np.where(vicon_map.semantic_map[:,:,1] == 255, 0, 255) # veg
+
+cv2.imwrite("class1.png",vicon_map_class1)
+cv2.imwrite("class3.png",vicon_map_class3)
+cv2.imwrite("class4.png",vicon_map_class4)
