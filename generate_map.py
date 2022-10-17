@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 from scipy.spatial.transform import Rotation 
+from PIL import Image
 # import math3d as m3d
 
 CUBOID_LENGTH = 0.56
@@ -149,6 +150,29 @@ vicon_map_class1 = np.where(vicon_map.semantic_map[:,:,0] == 255, 0, 255) # road
 vicon_map_class3 = np.where(vicon_map.semantic_map[:,:,2] == 255, 0, 255) # build
 vicon_map_class4 = np.where(vicon_map.semantic_map[:,:,1] == 255, 0, 255) # veg
 
-cv2.imwrite("class1.png",vicon_map_class1)
-cv2.imwrite("class3.png",vicon_map_class3)
-cv2.imwrite("class4.png",vicon_map_class4)
+cv2.imwrite("class1_.png",vicon_map_class1)
+cv2.imwrite("class3_.png",vicon_map_class3)
+cv2.imwrite("class4_.png",vicon_map_class4)
+
+# flip images upside down 
+# open the original image
+original_img = Image.open("class1_.png")
+# Flip the original image vertically
+vertical_img = original_img.transpose(method=Image.FLIP_TOP_BOTTOM)
+vertical_img.save("class1.png")
+
+# open the original image
+original_img = Image.open("class3_.png")
+# Flip the original image vertically
+vertical_img = original_img.transpose(method=Image.FLIP_TOP_BOTTOM)
+vertical_img.save("class3.png")
+
+# open the original image
+original_img = Image.open("class4_.png")
+# Flip the original image vertically
+vertical_img = original_img.transpose(method=Image.FLIP_TOP_BOTTOM)
+vertical_img.save("class4.png")
+
+# create dummy class image
+dummy_img = np.full((vicon_map.image_size_y, vicon_map.image_size_x), 255, dtype=np.uint8)
+cv2.imwrite("dummy_image.png", dummy_img)
