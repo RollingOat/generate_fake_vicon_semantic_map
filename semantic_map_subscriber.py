@@ -13,12 +13,12 @@ class semantic_map_sub_node():
         self.loop_rate = rospy.Rate(0.1)
 
         # Publishers
-        self.pub = rospy.Publisher('sem_map_pub', Image, queue_size=10)
+        # self.pub = rospy.Publisher('sem_map_pub', Image, queue_size=10)
         self.sub = rospy.Subscriber('sem_map_sub', Image, self.callback)
 
     def callback(self,data):
         cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
-        cv2.imsave(self.dirToSave)
+        cv2.imsave(self.dirToSave, )
 
     def start(self):
         rospy.loginfo("Subscribe to Semantic map")

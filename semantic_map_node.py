@@ -12,7 +12,7 @@ class semantic_map_node():
         self.image = cv2.imread(self.image_filename)
         self.br = CvBridge()
         # Node cycle rate (in Hz).
-        self.loop_rate = rospy.Rate(1)
+        self.loop_rate = rospy.Rate(0.1)
 
         # Publishers
         self.pub = rospy.Publisher('sem_map_pub', Image, queue_size=10)

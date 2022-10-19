@@ -18,7 +18,7 @@ ROAD_BGR = [255, 0, 0]
 CYLINDER_BGR = [0, 255, 0]
 CUBOID_BGR = [0, 0, 255]
 # read images in
-image_file = "semantic_map_314.png"
+image_file = "semantic_map_3.png"
 image = plt.imread(image_file)
 image = np.uint8(image*255)
 plt.imshow(image,'gray')
